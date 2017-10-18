@@ -8,4 +8,6 @@ RUN git clone https://github.com/rafalsladek/xmr-stak-cpu.git /xmr-stak-cpu
 RUN cd /xmr-stak-cpu
 RUN cmake -DCMAKE_LINK_STATIC=ON .
 RUN make install
+RUN mv /xmr-stak-cpu/bin/xmr-stak-cpu xmr-stak-cpu_ubuntu_16.04
+RUN git -C /xmr-stak-cpu clean -fd
 RUN ls -al

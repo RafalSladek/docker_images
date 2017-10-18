@@ -1,0 +1,21 @@
+FROM ubuntu:14.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -qq
+RUN apt-get install -y -qq curl git wget python build-essential libmicrohttpd-dev software-properties-common automake libtool;
+RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python - --user
+RUN curl -L https://github.com/libuv/libuv/archive/v1.15.0.tar.gz | tar -xzf - -C /tmp/
+RUN cd /tmp/libuv-1.15.0
+RUN git clone https://chromium.googlesource.com/external/gyp.git build/gyp
+RUN build/gyp && ./setup install && cd -
+RUN /gyp_uv.py
+RUN ./autogen.sh
+RUN ./configure
+RUN make &&  make check && make install
+RUN which libuv
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test ;
+RUN apt-get update -qq
+RUN apt-get install -y -qq gcc-7 g++-7 make ;
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1 --slave /usr/bin/g++ g++ /usr/bin/g++-7 ;
+RUN curl -L https://cmake.org/files/v3.5/cmake-3.5.1.tar.gz | tar -xzf - -C /tmp/ ;
+RUN ( cd /tmp/cmake-3.5.1/ && ./configure && make && sudo make install && cd - ) > /dev/null
+RUN update-alternatives --install /usr/bin/cmake cmake /usr/local/bin/cmake 1 --force ;

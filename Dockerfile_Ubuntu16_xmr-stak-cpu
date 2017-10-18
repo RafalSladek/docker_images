@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 WORKDIR /xmr-stak-cpu
 RUN apt update -qq
+RUN apt install -y -qq git curl wget
 RUN apt install -y -qq libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
 
 RUN git clone https://github.com/rafalsladek/xmr-stak-cpu.git

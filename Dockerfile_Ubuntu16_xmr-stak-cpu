@@ -4,7 +4,8 @@ RUN apt update -qq
 RUN apt install -y -qq git curl wget
 RUN apt install -y -qq libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev
 
-RUN git clone https://github.com/rafalsladek/xmr-stak-cpu.git
+RUN git clone https://github.com/rafalsladek/xmr-stak-cpu.git /xmr-stak-cpu
+RUN cd /xmr-stak-cpu
 RUN cmake -DCMAKE_LINK_STATIC=ON .
 RUN make install
 RUN ls -al

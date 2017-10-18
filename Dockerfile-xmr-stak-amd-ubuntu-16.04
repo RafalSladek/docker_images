@@ -1,0 +1,7 @@
+FROM ubuntu:16.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -qq
+RUN apt-get install -y -qq ocl-icd-opencl-dev libmicrohttpd-dev libssl-dev cmake build-essential software-properties-common
+RUN add-apt-repository ppa:jonathonf/gcc-7.1
+RUN apt-get update -qq
+RUN apt-get install -y -qq  gcc-7 g++-7

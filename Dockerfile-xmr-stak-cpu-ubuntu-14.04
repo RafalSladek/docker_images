@@ -1,9 +1,9 @@
 FROM ubuntu:14.04
-RUN apt update -qq
-RUN apt install -y -qq curl libmicrohttpd-dev libssl-dev libhwloc-dev software-properties-common ;
+RUN apt-get update -qq
+RUN apt-get install -y -qq curl libmicrohttpd-dev libssl-dev libhwloc-dev software-properties-common ;
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test ;
-RUN apt update -qq
-RUN apt install -y -qq gcc-7 g++-7 make ;
+RUN apt-get update -qq
+RUN apt-get install -y -qq gcc-7 g++-7 make ;
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1 --slave /usr/bin/g++ g++ /usr/bin/g++-7 ;
 RUN curl -L https://cmake.org/files/v3.9/cmake-3.9.0.tar.gz | tar -xzf - -C /tmp/ ;
 RUN ( cd /tmp/cmake-3.9.0/ && ./configure && make && sudo make install && cd - ) > /dev/null

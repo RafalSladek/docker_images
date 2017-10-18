@@ -24,5 +24,5 @@ make  ;
 "
 
 mv $miner/bin/$miner bin/$image_name
-mv $miner/src/config.json bin/config.json
+cp $miner/src/config.json bin/config.json
 git -C $miner clean -fdx

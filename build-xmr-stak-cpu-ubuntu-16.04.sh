@@ -1,5 +1,5 @@
-#!/bin/bash
-set -ex ;
+#!/bin/bash -uex
+
 osVersion="16.04"
 os="ubuntu"
 miner="xmr-stak-cpu"

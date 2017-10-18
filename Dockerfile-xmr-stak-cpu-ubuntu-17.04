@@ -1,3 +1,4 @@
 FROM ubuntu:17.04
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq
 RUN apt-get install -y -qq libmicrohttpd-dev libssl-dev cmake build-essential libhwloc-dev

@@ -1,4 +1,5 @@
 FROM ubuntu:16.04
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -qq
 RUN apt-get install -y -qq software-properties-common git build-essential cmake libuv1-dev libmicrohttpd-dev
 RUN add-apt-repository ppa:jonathonf/gcc-7.1

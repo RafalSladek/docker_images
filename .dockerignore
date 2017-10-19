@@ -5,3 +5,6 @@ README.md
 xmr-stak-*
 xmrig
 Dockerfile-*
+.DS_Store
+monero*
+monero-pool

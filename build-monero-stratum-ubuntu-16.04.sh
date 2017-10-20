@@ -31,6 +31,7 @@ cd /$miner
 MONERO_DIR=/monero 
 cmake .
 make
+go build -o pool main.go
 "
 #cp -rf monero/bin monero-pool
 

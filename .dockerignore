@@ -8,3 +8,6 @@ Dockerfile-*
 .DS_Store
 monero*
 monero-pool
+monero*
+nodejs-pool*
+poolui*

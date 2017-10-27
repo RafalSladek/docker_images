@@ -1,0 +1,48 @@
+FROM ubuntu:14.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -y -qq update 
+RUN apt-get -y -qq upgrade
+
+# git 
+RUN apt-get -y -qq install git
+
+# clone monero
+RUN git clone https://github.com/monero-project/monero.git /monero
+RUN git -C /monero checkout tags/v0.11.0.0 -b v0.11.0.0 ;
+
+# clone pool
+RUN git clone https://github.com/aeon-crypto-pool/cryptonote-xmr-pool.git /pool
+
+#  curl software-properties-common build-essential
+RUN apt-get -y -qq install software-properties-common build-essential curl
+
+# cmake, gcc 
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test ;
+RUN apt-get -y -qq update
+RUN apt-get -y -qq install gcc-7 g++-7 make ;
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 1 --slave /usr/bin/g++ g++ /usr/bin/g++-7 ;
+RUN curl -L https://cmake.org/files/v3.5/cmake-3.5.1.tar.gz | tar -xzf - -C /tmp/ ;
+RUN ( cd /tmp/cmake-3.5.1/ && ./configure && make && sudo make install && cd - ) > /dev/null
+RUN update-alternatives --install /usr/bin/cmake cmake /usr/local/bin/cmake 1 --force ;
+
+# monero
+RUN apt-get -y -qq install  pkg-config libzmq3-dev libunbound-dev libminiupnpc-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev libgtest-dev doxygen graphviz
+
+# for cryptonote-xmr-pool
+RUN apt-get install -f -y -qq  software-properties-common redis-server libboost1.55-all-dev  libssl-dev ;
+
+# nodejs alternative
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN apt-get install -y nodejs
+#RUN apt-get install -f -y -qq nodejs-dev nodejs-legacy npm 
+
+# install packages and start pool
+WORKDIR /pool
+RUN npm update 
+RUN node init -config=config_example.json
+
+# compile monero anr run deamon
+WORKDIR /monero
+RUN cmake -DBUILD_SHARED_LIBS=1 . 
+RUN make 
+RUN screen -dm ./monerod 

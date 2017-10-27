@@ -2,3 +2,5 @@ xmr-stak-*
 xmrig
 .DS_Store
 monero*
+nodejs-pool*
+poolui*

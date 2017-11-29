@@ -1,5 +1,21 @@
 FROM ubuntu:16.04
 ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get -qq update 
+RUN apt-get install -y -qq git curl wget vim htop software-properties-common build-essential
+RUN add-apt-repository ppa:jonathonf/gcc-7.1
 RUN apt-get update -qq
-RUN apt-get install -y -qq software-properties-common git libcap2-bin
-RUN apt-get install -y -qq build-essential cmake curl vim wget pkg-config libboost-all-dev libssl-dev libzmq3-dev libunbound-dev libminiupnpc-dev libunwind8-dev liblzma-dev libreadline6-dev libldns-dev libexpat1-dev libgtest-dev doxygen graphviz
+RUN apt-get install -y -qq  gcc-7 g++-7
+RUN set -x && \
+    buildDeps=' \
+      ca-certificates \
+      cmake \
+      libboost1.58-all-dev \
+      libssl-dev \
+      libzmq3-dev \
+      libsodium-dev \
+      make \
+      pkg-config \
+      doxygen \
+      graphviz \
+  ' \ 
+  && apt-get -y -qq --no-install-recommends install $buildDeps
